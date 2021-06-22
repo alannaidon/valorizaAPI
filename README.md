@@ -9,7 +9,7 @@ Following the principle "kindness generate kindness", Valoriza will help the mem
 
 ## Tecnologias Utilizadas
 - NodeJS;
-- Type ORM;
+- Type ORM - SQLite;
 - Git;
 
 ---
