@@ -6,6 +6,11 @@ interface IPayload {
 
 export function ensureAuthentication(request: Request, response: Response, next: NextFunction) {
   const authToken = request.headers.authorization
+
+  if (!authToken) {
+    return response.status(401).end()
+  }
+
   const [, token] = authToken.split(' ') // Get only the token
 
   try {
