@@ -13,9 +13,12 @@ class AuthenticationUserService {
 
   async execute({ email, password }: IAuthenticationRequest) {
     const userRepository = getCustomRepository(UserRepository)
-
+    let passwordMatch = false
     const user = await userRepository.findOne({ email })
-    const passwordMatch = await compare(password, user.password)
+
+    if (user) {
+      passwordMatch = await compare(password, user.password)
+    }
 
     if (!passwordMatch || !user) {
       throw new Error('email/password is incorrect!')
@@ -25,7 +28,7 @@ class AuthenticationUserService {
     const token = sign({
       email: user.email,
     },
-      '4f995488c6055b6d181f5530dd7c2198', {
+      process.env.SECRET_KEY, {
       subject: user.id,
       expiresIn: '1d'
     })
